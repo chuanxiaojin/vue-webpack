@@ -1,0 +1,29 @@
+{
+  "name": "api-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "huhb",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "express-jwt": "^3.1.0",
+    "gulp": "^3.9.0",
+    "gulp-api-doc": "^1.0.1",
+    "gulp-rsync": "0.0.5",
+    "gulp-sftp": "^0.1.5",
+    "json-server": "^0.8.2",
+    "jsonwebtoken": "^5.4.1",
+    "redis": "^2.2.5"
+  },
+  "devDependencies": {
+    "body-parser": "^1.15.0",
+    "browser-sync": "^2.10.0",
+    "express-jwt": "^3.3.0",
+    "json-server": "^0.8.9",
+    "jsonwebtoken": "^5.7.0"
+  }
+}
