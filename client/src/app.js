@@ -1,6 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import VueResource from "vue-resource";
+import auth from './components/user.js'
+
 // 引入路由配置文件
 import { configRouter } from "./router.js"
 // 引入自定义的过滤器文件
@@ -27,6 +29,12 @@ Vue.config.debug = true;
 
 // new Vue(app);//新建一个vue实例，现在使用vue-router就不需要了。
 
+// vue-resource 设置初始权限
+Vue.http.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token')
+
+// 当app启动时验证用户的登录状态
+auth.checkAuth();
+
 // 正式开始
 // 创建一个路由器实例
 // 创建实例时可以传入配置参数进行定制
@@ -45,6 +53,24 @@ setDirective(Vue);
 // 路由器需要一个根组件。
 const App = Vue.extend(require('./components/app.vue'));
 
+import Auth_API from './js/server-api.js';
+const option = Auth_API.option;
+
+
+Vue.http.interceptors.push({
+    request: function(config) {
+
+        config.headers = config.headers || {};
+
+        ///if (!headers.hasOwnProperty('Authorization')) {
+        config.headers.Authorization = 'Bearer ' + localStorage.getItem("token");
+        //}
+        console.log(localStorage);
+        config.headers['x-api-version']= option.api.version;
+        console.log('token:  ' + config.headers.Authorization);
+        return config;
+    }
+});
 
 // 现在我们可以启动应用了！
 // 路由器会创建一个 App 实例，并且挂载到选择符 #app 匹配的元素上。

@@ -1,4 +1,6 @@
 <script>
+    import auth from './user.js'
+
     export default{
         data () {
             return {
@@ -6,11 +8,6 @@
                 user: {
                     username: '',
                     password: ''
-                },
-                option: {
-                    api: {
-                        base_url : "http://127.0.0.1:4000"
-                    }
                 },
                 loginInfo: "",
                 usernameFlag: false
@@ -24,40 +21,10 @@
                     this.usernameFlag = false;
                 }
             },
-            login: function(username, password) {
-                if(username == '' || password == '') {
-                    this.loginInfo = "看看啥没填...";
-                    return;
-                }
-                console.log('hello', this.$http);
-                var _this = this;
-                this.$http(
-                    {
-                        url: this.option.api.base_url + '/user/signin',
-                        method: 'post',
-                        data: {username: username, password: password}
-                    }
-                ).then(function(response) {
-
-                    var loginFlag = response.data;
-                    if(loginFlag.success == true) {
-                        console.log('登录成功');
-                        this.loginInfo = "登录成功, 两秒钟后跳转";
-                        var that = this;
-                        // 判断登录成功后跳转到 list 页面
-                        setTimeout(function() {
-                            that.loginInfo = "",
-                            _this.$route.router.go({name:"main"});
-                        }, 2000)
-                    }else {
-                        console.log('登录失败');
-                        this.loginInfo = loginFlag.message;
-                    }                    
-                }, function(error) {
-                    this.loginInfo = error.message;
-                    console.log(error);
-                });
+            login(username, password) {
+                auth.login(this, username, password);
             }
+
         }
     }
 </script>

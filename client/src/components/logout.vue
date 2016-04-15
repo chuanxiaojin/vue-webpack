@@ -1,45 +1,16 @@
 <script>
+    import auth from './user.js'
     export default{
         data () {
             return {
-                hello:"点击下面按钮退出(将跳转到 hello 页面)...",
-                option: {
-                    api: {
-                        base_url : "http://127.0.0.1:4000"
-                    }
-                },
-                loginInfo: "这里会告诉你退出成功...",
+                hello:"点击下面按钮退出(将跳转到 hello 页面)dd ...",
+                loginInfo: "这里会告诉你退出成功de ..."
             }
         },
         methods: {
-             logout: function() {
-                var _this = this;
-                this.$http(
-                    {
-                        url: this.option.api.base_url + '/user/logout',
-                        method: 'get'
-                    }
-                ).then(function(response) {
-                    console.log(response);
-                    var loginFlag = response.data;
-                    if(loginFlag.success == true) {
-                        console.log('退出成功');
-                        this.loginInfo = loginFlag.logout;
-
-                        // 判断登录成功后跳转到 list 页面
-                        setTimeout(function() {
-                            _this.$route.router.go({name:"hello"});
-                        }, 2000)
-                    }else {
-                        console.log('退出失败');
-                    } 
-                    
-                }, function(error) {
-                    this.loginInfo = error.message;
-                    console.log(error);
-                    _this.$route.router.go({name:"hello"});
-                });
-            }
+             logout(){
+                auth.logout(this);
+             } 
         }
     }
 </script>

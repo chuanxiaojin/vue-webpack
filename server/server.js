@@ -18,17 +18,31 @@ server.use(bodyParser.json());
  server.all('*', config.cors);
 
 ///
- server.get('/',function(req,res){res.send('Hello! The API is at http://127.0.0.1:4000/api');})
+ server.get('/',function(req,res){res.send('Hello! The API is at http://127.0.0.1:3000/api');})
 
 //Login
  server.post('/user/signin', routes.users.signin); 
  
 //Logout
-server.get('/user/logout', routes.users.logout); //jwt({secret: config.secretToken}),
+server.get('/user/logout', jwt({secret: config.secretToken}), routes.users.logout); 
 
 // 访问静态文件，静态文件放置在public 目录下
 // 例如可以直接访问http://127.0.0.1:3000/images/book1.jpg
 server.use(jsonServer.defaults());
+
+// 对API 版本进行控制
+server.use(function a(req,res,next) {
+    console.log("请求的API版本号是" + req.headers['x-api-version']);
+    console.log("当前API版本号是" +config.VERSION)
+    if (req.headers['x-api-version'] != config.VERSION) {
+        res.json({
+            success: false,
+            message: '请求API 版本不对'
+        });
+    } else {
+    	next();
+    }
+})
 
 //api 假数据
 var APIRouter = jsonServer.router('db.json');
@@ -36,14 +50,19 @@ var APIRouter = jsonServer.router('db.json');
 //路由映射
 //db.json 数据访问路径为 http://127.0.0.1:3000/api/catalogs/
 server.use(jsonServer.rewriter({'/api/':'/'}));
+
+
+
+
+
 // 对 api 路径验证是否授权 未授权则无法访问
-// server.use(jwt({secret: config.secretToken})); 
+ server.use(jwt({secret: config.secretToken})); 
 
 server.use(APIRouter);
 
 // 启动服务器
-server.listen(4000,function(req,res){
-	console.log("\n\nthe mock server is listening at port 4000!")
+server.listen(3000,function(req,res){
+	console.log("the mock server is listening at port 3000!")
 });
 
 

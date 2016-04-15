@@ -40,15 +40,14 @@ module.exports = {
 				exclude: /node_modules/
 			},
 			{
-				test: /\.(css|scss)$/,
+				test: /\.(css)$/,
 				// loader: "style-loader!css-loader!autoprefixer"
 				// 将css文件单独打包
 				loader:  ExtractTextPlugin.extract("style-loader", "css-loader!less-loader")
 			},
 			{
-				test: /\.less$/,
-				// loader: 'style-loader!css-loader!less-loader'},
-				loader:  ExtractTextPlugin.extract("style-loader", "css-loader!less-loader")
+			    test: /\.styl$/,
+			    loader: 'style-loader!css-loader!stylus-loader'
 			},
 			{
 				test: /\.(png|jpg)$/,
@@ -66,7 +65,7 @@ module.exports = {
 	},
 	vue: {   //vue 配置, 需要单独拿出来配置
 		loaders: {
-			css: 'style!css!autoprefixer!sass?sourceMap'
+			css: 'style!css!stylus?sourceMap'
 		}
 	},
 	//服务器配置, 自动刷新
@@ -122,7 +121,7 @@ module.exports = {
 		// root参数将node_modules设置成了搜索目录。
 		root: [process.cwd() + '/src', process.cwd() + '/node_modules'],
         // require时省略的扩展名，如：require('module') 不需要module.js
-        extensions: ['', '.js', '.vue'],
+        extensions: ['', '.js', '.vue', '.styl'],
         // 别名，可以直接使用别名来代表设定的路径以及其他
         alias: {
             filter: path.join(__dirname, './src/filters'),
