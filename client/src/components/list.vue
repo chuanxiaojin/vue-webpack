@@ -4,7 +4,7 @@
             return {
                 option: {
                     api: {
-                        base_url : "http://127.0.0.1:4000"
+                        base_url : "http://127.0.0.1:3000"
                     }
                 },
                 catalogs: []
@@ -48,6 +48,7 @@
                 <img v-bind:src="catalog" alt="" style="width:100px;height:100px;">
             </li>
         </ul>
+        <h2><a v-link="{ name: 'logout'}">点击退出</a></h2>
     </div>
 </template>
 

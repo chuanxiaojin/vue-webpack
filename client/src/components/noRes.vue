@@ -2,7 +2,7 @@
     export default{
         data () {
            return {
-                hello:"hello, welcome vue-webpack",
+                hello:"我没有对后端请求, 所有你在诶登录的情况下访问到了...",
             }
         }
     }
@@ -11,8 +11,8 @@
 <template>
     <div>
         <h1>{{hello}}</h1>
-        <h2><a v-link="{ name: 'list' }">路由限制,您已经登录, 可以访问...</a><h2>
-        <h2><a v-link="{ name: 'logout'}">点击退出</a></h2>
+        <h2><a v-link="{ name: 'login' }">点击登录</a><h2>
+        <h2><a v-link="{ name: 'list'}">路由限制,对后端有请求, 没有登录不能访问</a></h2>
     </div>   
 </template>
 <style>

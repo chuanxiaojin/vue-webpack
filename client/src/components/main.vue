@@ -8,8 +8,9 @@
 </script>
 <template>
     <div>
-        <h2><a v-link="{ name: 'list' }">点击查看 list 页面(需要token, 路由做限制 TODO..)</a></h2>
-        <h2><a v-link="{ name: 'logout'}">点击退出</a></h2>
+        <h2><a v-link="{ name: 'login' }">点击登录</a></h2>
+        <h2><a v-link="{ name: 'list' }">路由限制,对后端有请求, 没有登录不能访问</a><h2>
+        <h2><a v-link="{ name: 'noRes' }">路由限制,对后端没有请求, 可以正常访问</a><h2>	
     </div>
 </template>
 

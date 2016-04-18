@@ -22,6 +22,7 @@
                 }
             },
             login(username, password) {
+                console.log(username);
                 auth.login(this, username, password);
             }
 

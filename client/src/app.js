@@ -4,7 +4,7 @@ import VueResource from "vue-resource";
 import auth from './components/user.js'
 
 // 引入路由配置文件
-import { configRouter } from "./router.js"
+import { configRouter } from "./router-config.js"
 // 引入自定义的过滤器文件
 import { setFilter } from "./js/filter.js"
 // 引入自定义的指令文件
@@ -30,17 +30,18 @@ Vue.config.debug = true;
 // new Vue(app);//新建一个vue实例，现在使用vue-router就不需要了。
 
 // vue-resource 设置初始权限
-Vue.http.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token')
+// Vue.http.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
 
 // 当app启动时验证用户的登录状态
-auth.checkAuth();
+// auth.checkAuth();
 
 // 正式开始
 // 创建一个路由器实例
 // 创建实例时可以传入配置参数进行定制
 var router = new VueRouter({
     history: true,
-    saveScrollPosition: true
+    saveScrollPosition: true,
+    suppressTransitionError: true
 });
 
 // 注入路由
@@ -57,17 +58,27 @@ import Auth_API from './js/server-api.js';
 const option = Auth_API.option;
 
 
+//  http 相关
+Vue.http.options.crossOrigin = true;
+Vue.http.options.xhr = {withCredentials: true};
+
 Vue.http.interceptors.push({
     request: function(config) {
 
         config.headers = config.headers || {};
 
-        ///if (!headers.hasOwnProperty('Authorization')) {
-        config.headers.Authorization = 'Bearer ' + localStorage.getItem("token");
-        //}
-        console.log(localStorage);
+        if (window.sessionStorage.token) { //!config.headers.hasOwnProperty('Authorization')
+            config.headers.Authorization = 'Bearer ' + window.sessionStorage.token;
+        }
+        console.log(window.sessionStorage.token);
         config.headers['x-api-version']= option.api.version;
         console.log('token:  ' + config.headers.Authorization);
+        return config;
+    },
+    response: function (config) {
+        if(config.status === 401) {
+            window.location.pathname = '/main'
+        }
         return config;
     }
 });
