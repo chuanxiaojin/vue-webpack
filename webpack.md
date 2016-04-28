@@ -19,4 +19,4 @@ learning webpack
 ### 常用 loader
 |             loader name     |  loader explanation                              |
 |-----------------------------|--------------------------------------------------|
-| html-webpack-plugin | 这个插件用来简化创建服务 webpack bundle 的 HTML 文件, 尤其是对于在文件名中包含了 hash 值, 而这个值在每次编译的时候都发生变化的情况。你既可以让这个插件来帮助你自动生成 HTML 文件 |
+| <a href="https://www.npmjs.com/package/html-webpack-plugin">html-webpack-plugin</a> | 这个插件用来简化创建服务 webpack bundle 的 HTML 文件, 尤其是对于在文件名中包含了 hash 值, 而这个值在每次编译的时候都发生变化的情况。你既可以让这个插件来帮助你自动生成 HTML 文件 |
